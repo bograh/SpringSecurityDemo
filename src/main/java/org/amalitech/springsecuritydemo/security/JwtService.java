@@ -52,8 +52,7 @@ public class JwtService {
 
     public boolean isTokenValid(String token) {
         try {
-            parseClaims(token);
-            return true;
+            return parseClaims(token).getExpiration().after(Date.from(Instant.now()));
         } catch (JwtException | IllegalArgumentException e) {
             log.error(e.getMessage());
             return false;
